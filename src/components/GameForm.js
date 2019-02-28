@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import classnames from 'classnames';
+import {connect} from "react-redux";
+import {saveGame} from '../actions'
 
 
 class GameForm extends Component{
@@ -14,6 +16,7 @@ class GameForm extends Component{
         title:'',
         cover:'',
         errors: {},
+        loading: false,
     }
     handleChange = (e) =>{
         if(!!this.state.errors[e.target.name]){
@@ -34,12 +37,19 @@ class GameForm extends Component{
         if(!this.state.cover)errors.cover='Can not be empty';
         this.setState({
             errors
-        })
+        });
+        const isValid = Object.keys(errors).length === 0 ;
+        if(isValid){
+            const {title,cover} = this.state;
+            this.setState({loading: true});
+           this.props.saveGame({title,cover})
+        }
+
     }
 
     render() {
         return(
-            <form className="ui form" onSubmit={this.handleSubmit}>
+            <form className={classnames('ui','form',{loading:this.state.loading})} onSubmit={this.handleSubmit}>
                 <h1>add new game</h1>
 
                 <div className={classnames('filed',{error:!!this.state.errors.title})}>
@@ -74,4 +84,4 @@ class GameForm extends Component{
     }
 }
 
-export default GameForm;
+export default connect(null,{saveGame})(GameForm);
