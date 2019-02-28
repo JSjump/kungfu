@@ -10,6 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from './reducers'
 import {BrowserRouter,Route,NavLink} from "react-router-dom";
 import GamesPage from "./components/game/GamesPage";
+import GameForm from "./components/GameForm"
 
 const store = createStore(
     rootReducer,
@@ -25,10 +26,11 @@ ReactDOM.render(
             <div className="ui three item menu">
                 <NavLink exact activeClassName="active" className="item" to="/">home</NavLink>
                 <NavLink exact activeClassName="active" className="item" to="/games">page</NavLink>
-                <NavLink exact className="item" to="/new">new</NavLink>
+                <NavLink exact className="item" to="/games/new">new</NavLink>
             </div>
             <Route exact path="/" component={App}></Route>
             <Route exact path="/games" component={GamesPage}></Route>
+            <Route path="/games/new" component={GameForm}></Route>
         </div>
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
