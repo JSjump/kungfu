@@ -9,6 +9,19 @@ const games = ( state=[], action={} ) => {//reducer 中的state就是其自身�
                 ...state,
                 action.game,
             ]
+        case GAME_FETCHED:
+            const index = state.findIndex(item => item._id === action.game._id);
+            if(index > -1){
+                 return state.map(item => {
+                     if(item._id === action.game._id) return action.game;
+                     return item;
+                 })
+            }else{
+                return [
+                    ...state,
+                    action.game
+                ]
+            }
         default: return state;
     }
 };
