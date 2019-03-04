@@ -19,10 +19,9 @@ const handleResponse = res => {
     if(res.ok){
         return res.json();
     }else{
-        console.log('res',res)
         let error = new Error(res.statusText);
         error.response = res;
-        console.log('error.response',error)
+        console.log('error.response',error.response)
         throw error;
     }
 }
