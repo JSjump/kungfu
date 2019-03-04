@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import classnames from 'classnames';
 import {connect} from "react-redux";
-import {saveGame} from '../actions'
+import {saveGame, fetchGame} from '../actions'
 import {Redirect} from 'react-router-dom'
 
 class GameForm extends Component{
@@ -19,6 +19,13 @@ class GameForm extends Component{
         loading: false,
         done:false,
     }
+    componentDidMount() {
+        const {match} = this.props;
+        if(match.params._id){
+            this.props.fetchGame(match.params._id);
+        }
+    }
+
     handleChange = (e) =>{
         if(!!this.state.errors[e.target.name]){
             let errors = Object.assign({},this.state.errors);
@@ -98,4 +105,4 @@ class GameForm extends Component{
     }
 }
 
-export default connect(null,{saveGame})(GameForm);
+export default connect(null,{saveGame, fetchGame})(GameForm);
