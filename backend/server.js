@@ -26,9 +26,25 @@ mongodb.MongoClient.connect(dburl,(err,client) => {
             res.json({game})
         })
     })
+    app.put('/api/games/:_id',(req,res) => {
+        const {errors,isValid} = validate(req.body);
+        if(isValid){
+            const {title,cover} = req.body;
+            db.collection('games').findOneAndUpdate(
+                {_id:new mongodb.ObjectId(req.params._id)},
+                {$set: {title,cover}},
+                {returnOriginal:false},
+                (err,result) =>{
+                    if(err){res.status(500).json({errors: {global:err}});return}
+                    res.json({game:result.value})
+                }
+            )
+        }else {
+            res.status(400).json({ errors });
+        }
+    })
 
     app.post('/api/games',(req,res) => {
-           console.log(req.body)
         const {errors,isValid} = validate(req.body);
            if(isValid){
                const {title,cover} = req.body;

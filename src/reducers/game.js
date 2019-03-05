@@ -1,4 +1,4 @@
-import {ADD_GAME, SET_GAMES, GAME_FETCHED} from '../constants';
+import {ADD_GAME, SET_GAMES, GAME_FETCHED,UPDATE_GAME} from '../constants';
 const games = ( state=[], action={} ) => {//reducer 中的state就是其自身所对应管理的state!不是整个状态树！
     console.log('statestate',state);
     switch (action.type) {
@@ -9,6 +9,11 @@ const games = ( state=[], action={} ) => {//reducer 中的state就是其自身�
                 ...state,
                 action.game,
             ]
+        case UPDATE_GAME:
+            return state.map(item => {
+                if(item._id === action.game._id) return action.game;
+                return item;
+            })
         case GAME_FETCHED:
             const index = state.findIndex(item => item._id === action.game._id);
             if(index > -1){
