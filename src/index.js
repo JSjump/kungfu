@@ -11,6 +11,7 @@ import rootReducer from './reducers'
 import {BrowserRouter,Route,NavLink} from "react-router-dom";
 import GamesPage from "./components/game/GamesPage";
 import GameForm from "./components/GameForm"
+import GameFormPage from "./components/GameFormPage"
 
 const store = createStore(
     rootReducer,
@@ -30,8 +31,8 @@ ReactDOM.render(
             </div>
             <Route exact path="/" component={App}></Route>
             <Route exact path="/games" component={GamesPage}></Route>
-            <Route path="/games/new" component={GameForm}></Route>
-            <Route path="/game/:_id" component={GameForm}></Route>
+            <Route path="/games/new" component={GameFormPage}></Route>
+            <Route path="/game/:_id" component={GameFormPage}></Route>
         </div>
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
